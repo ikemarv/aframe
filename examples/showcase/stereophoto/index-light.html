@@ -4,60 +4,22 @@
     <meta charset="utf-8">
     <title>Laser input UI</title>
     <meta name="description" content="Laser input UI • A-Frame">
-    <!--<script src="../../../dist/aframe-master.js"></script>-->
+
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-environment-component@1.2.0/dist/aframe-environment-component.min.js"></script>
 
     <script src="lib/aframe-stereo-component.min.js"></script>
-
-    <script src="https://unpkg.com/aframe-click-drag-component"></script>
-    <script>registerAframeClickDragComponent(window.AFRAME);</script>
-
-    <!--<script src="src/main.js"></script>-->
   </head>
   <body>
-    <a-scene
-      background="color: #212"
-      webxr="referenceSpaceType: local-floor"
-      environment
-      cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable">
+    <a-scene>
+    <a-sky color="#FFF"></a-sky>
+    <a-light color="#333" position="0 5 0" type="ambient" intensity="0.2"></a-light>
+    <a-light type="point" color="#EEE" intensity="1.0" position="3 3 10"></a-light>
+
+    <a-camera position="0 1.6 0" cursor-color="black" stereocam="eye:left;"></a-camera>
 
       
-      <a-image id="leftPicture" src="./assets/secrets/kbd1_l.JPG" stereo="eye:left" click-drag position="0 1.6 -2"></a-image>
-      <a-image id="rightPicture" src="./assets/secrets/kbd1_r.JPG" stereo="eye:right" click-drag position="0 1.6 -2"></a-image>
-      
-<!--
-      <a-box id="leftPicture" src="./assets/test_left.png" stereo="eye:left" click-drag position="0 1.6 -2" scale="2 2 0.1"></a-box>
-      <a-box id="rightPicture" src="./assets/test_right.png" stereo="eye:right" click-drag position="0 1.6 -2" scale="2 2 0.1"></a-box>
--->  <!--<a-sphere click-drag position="0 1.25 -2" radius="1.25" color="#EF2D5E"></a-sphere>-->
-
-
-      <a-entity
-        id="background"
-        position="0 0 0"
-        geometry="primitive: sphere; radius: 2.0"
-        material="color: red; side: back; shader: flat"
-        scale="0.001 0.001 0.001"
-        visible="false" class="raycastable">
-      </a-entity>
-
-      <!--look-controls="magicWindowTrackingEnabled: false; touchEnabled: false; mouseEnabled: false"
-              camera wasd-controls="acceleration:20; wsAxis:y; wsInverted:true" look-controls="false"
--->
-      <a-entity
-        position="0 1.6 0"
-        camera wasd-controls="false" look-controls="false"
-        stereocam="eye:left;">
-        <a-entity
-          id="fadeBackground"
-          geometry="primitive: sphere; radius: 2.5"
-          material="color: black; side: back; shader: flat; transparent: true; opacity: 0.6" visible="false">
-        </a-entity>
-      </a-entity>
-
-      <!-- Hand controls -->
-      <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .raycastable"></a-entity>
-      <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .raycastable" line="color: #118A7E"></a-entity>
+      <a-image id="leftPicture" src="./assets/secrets/kbd-lite_l.JPG" stereo="eye:left" position="0 1.6 -2" width="1.69"></a-image>
+      <a-image id="rightPicture" src="./assets/secrets/kbd-lite_r.JPG" stereo="eye:right" position="0 1.6 -2" width="1.69"></a-image>
 
       <!-- move image by key -->
       <script>
