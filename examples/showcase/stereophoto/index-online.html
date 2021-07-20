@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Laser input UI</title>
+    <meta name="description" content="Laser input UI • A-Frame">
+    <!--<script src="../../../dist/aframe-master.js"></script>-->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.2.0/dist/aframe-environment-component.min.js"></script>
+
+    <script src="lib/aframe-stereo-component.min.js"></script>
+
+    <script src="https://unpkg.com/aframe-click-drag-component"></script>
+    <script>registerAframeClickDragComponent(window.AFRAME);</script>
+
+    <!--<script src="src/main.js"></script>-->
+  </head>
+  <body>
+    <a-scene
+      background="color: #212"
+      webxr="referenceSpaceType: local-floor"
+      environment
+      cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable">
+
+      
+      <a-image id="leftPicture" src="https://raw.githubusercontent.com/ikemarv/aframe/master/examples/showcase/stereophoto/assets/test_left.png" stereo="eye:left" click-drag position="0 1.6 -2"></a-image>
+      <a-image id="rightPicture" src="https://raw.githubusercontent.com/ikemarv/aframe/master/examples/showcase/stereophoto/assets/test_right.png" stereo="eye:right" click-drag position="0 1.6 -2"></a-image>
+      
+<!--
+      <a-box id="leftPicture" src="./assets/test_left.png" stereo="eye:left" click-drag position="0 1.6 -2" scale="2 2 0.1"></a-box>
+      <a-box id="rightPicture" src="./assets/test_right.png" stereo="eye:right" click-drag position="0 1.6 -2" scale="2 2 0.1"></a-box>
+-->  <!--<a-sphere click-drag position="0 1.25 -2" radius="1.25" color="#EF2D5E"></a-sphere>-->
+
+
+      <a-entity
+        id="background"
+        position="0 0 0"
+        geometry="primitive: sphere; radius: 2.0"
+        material="color: red; side: back; shader: flat"
+        scale="0.001 0.001 0.001"
+        visible="false" class="raycastable">
+      </a-entity>
+
+      <!--look-controls="magicWindowTrackingEnabled: false; touchEnabled: false; mouseEnabled: false"
+              camera wasd-controls="acceleration:20; wsAxis:y; wsInverted:true" look-controls="false"
+-->
+      <a-entity
+        position="0 1.6 0"
+        camera wasd-controls="false" look-controls="false"
+        stereocam="eye:left;">
+        <a-entity
+          id="fadeBackground"
+          geometry="primitive: sphere; radius: 2.5"
+          material="color: black; side: back; shader: flat; transparent: true; opacity: 0.6" visible="false">
+        </a-entity>
+      </a-entity>
+
+      <!-- Hand controls -->
+      <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .raycastable"></a-entity>
+      <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .raycastable" line="color: #118A7E"></a-entity>
+
+      <!-- move image by key -->
+      <script>
+        var leftPicture = document.getElementById('leftPicture');
+        var rightPicture = document.getElementById('rightPicture');
+        var posLX = leftPicture.getAttribute('position')['x'];
+        var posRX = rightPicture.getAttribute('position')['x'];
+        var posLY = leftPicture.getAttribute('position')['y'];
+        var posRY = rightPicture.getAttribute('position')['y'];
+        var posLZ = leftPicture.getAttribute('position')['z'];
+        var posRZ = rightPicture.getAttribute('position')['z'];
+        var invertMove = 1;
+
+        window.addEventListener('keydown', event => {
+          switch (event.keyCode) {
+              case 87: // W
+              posRY = posRY + 0.1*invertMove;
+              rightPicture.setAttribute('position', { x: posRX, y: posRY, z: posRZ });
+              posLY = posLY + 0.1*invertMove;
+              leftPicture.setAttribute('position', { x: posLX, y: posLY, z: posLZ });
+                break;
+              case 83: // S
+              posRY = posRY - 0.1*invertMove;
+              rightPicture.setAttribute('position', { x: posRX, y: posRY, z: posRZ });
+              posLY = posLY - 0.1*invertMove;
+              leftPicture.setAttribute('position', { x: posLX, y: posLY, z: posLZ });
+                break;
+              case 65: // A
+              posRX = posRX - 0.1*invertMove;
+              rightPicture.setAttribute('position', { x: posRX, y: posRY, z: posRZ });
+              posLX = posLX - 0.1*invertMove;
+              leftPicture.setAttribute('position', { x: posLX, y: posLY, z: posLZ });
+                break;
+              case 68: // D
+              posRX = posRX + 0.1*invertMove;
+              rightPicture.setAttribute('position', { x: posRX, y: posRY, z: posRZ });
+              posLX = posLX + 0.1*invertMove;
+              leftPicture.setAttribute('position', { x: posLX, y: posLY, z: posLZ });
+                break;
+              case 38: // ArrowUp
+              posRZ = posRZ - 0.1*invertMove;
+              rightPicture.setAttribute('position', { x: posRX, y: posRY, z: posRZ });
+              posLZ = posLZ - 0.1*invertMove;
+              leftPicture.setAttribute('position', { x: posLX, y: posLY, z: posLZ });
+                break;
+              case 40: // ArrowDown
+              posRZ = posRZ + 0.1*invertMove;
+              rightPicture.setAttribute('position', { x: posRX, y: posRY, z: posRZ });
+              posLZ = posLZ + 0.1*invertMove;
+              leftPicture.setAttribute('position', { x: posLX, y: posLY, z: posLZ });
+          }
+        });
+
+
+      </script>
+
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
